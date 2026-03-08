@@ -98,8 +98,6 @@ Suggested citation for this repository:
 
 Palacios-Morales, D., Rodríguez-Gómez, G., & Martín-González, J. A. (2026). *StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note* (Version 1.0.0) [Code and data repository]. Zenodo. https://doi.org/10.5281/zenodo.18913362
 
-Repository URL:
-https://github.com/D4v1d-d0/StablePopulation-reproducibility
 
 ## License
 
