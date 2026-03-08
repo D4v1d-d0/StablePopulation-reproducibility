@@ -1,9 +1,10 @@
 cff-version: 1.2.0
-message: "If you use this repository, please cite it as below."
+message: "If you use this repository, please cite the archived Zenodo version below."
 type: software
 title: "StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note"
-version: 1.0.0
-date-released: 2026-03-08
+version: "1.0.0"
+doi: 10.5281/zenodo.18913362
+date-released: "2026-03-08"
 authors:
   - family-names: "Palacios-Morales"
     given-names: "David"
