@@ -91,13 +91,16 @@ The package performs the core demographic calculations, while this repository co
 
 If you use this repository, please cite both:
 
-1. the `StablePopulation` R package, and
+1. the `StablePopulation` R package, and  
 2. this reproducibility repository.
 
 Suggested citation for this repository:
 
-Palacios-Morales, D., Rodríguez-Gómez, G., & Martín-González, J. A. (2026). *StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note* (Version 1.0.0) [Code and data repository]. GitHub / Zenodo. [DOI to be added]
+Palacios-Morales, D., Rodríguez-Gómez, G., & Martín-González, J. A. (2026). *StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note* (Version 1.0.0) [Code and data repository]. Zenodo. https://doi.org/10.5281/zenodo.18913362
+
+Repository URL:
+https://github.com/D4v1d-d0/StablePopulation-reproducibility
 
 ## License
 
-This repository is distributed under the same license used for the associated software, unless otherwise stated in this repository.
+This repository is distributed under the GNU General Public License v3.0 only (GPL-3.0-only), consistent with the license used for the associated software, unless otherwise stated for specific files in this repository.
