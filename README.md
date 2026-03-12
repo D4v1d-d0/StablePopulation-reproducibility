@@ -11,16 +11,8 @@ The current version of the reproducibility workflow reproduces three example cas
 ## Repository contents
 
 - `Inputs_3_examples.xlsx`  
-  Input workbook used by the external reproducibility script. It must contain the sheets:
-  - `Castor_Cannadensis_input`
-  - `Ovis_dalli_input`
-  - `Rupicapra_Rupicapra_input`
-
-  Each sheet must contain the columns:
-  - `age`
-  - `lx_obs`
-  - `mx`
-
+  Input workbook used by the external reproducibility script.
+  
 - `make_figure_and_outputs_R0eq1_no_rescaling_reordered.R`  
   External R script used to generate the output workbook and Figure 1.
 
@@ -55,35 +47,7 @@ This repository provides the materials needed to reproduce that external analysi
 5. exporting the output workbook,
 6. generating Figure 1 in multiple formats.
 
-## Method implemented in the current script
 
-The current script differs from earlier versions of the workflow in one important respect:
-
-- it uses the **original** fertility schedules (`mx`) for each species,
-- it does not rescale fertility by observed $R_0$,  
-- and for each beta it computes the alpha that forces.
-
-$$
-\sum l_x^{\mathrm{pred}} m_x = 1
-$$
-
-In other words, the present script works under an artificial constraint of $R_0 = 1$ using the original $m_x$ values, rather than reconstructing a profile consistent with each species’ observed $R_0$.
-
-This means that the current workflow should be interpreted as a controlled comparative experiment under a fixed demographic constraint, not as a direct reconstruction of the empirical $R_0$ values reported in the source papers.
-
-## Species order used in outputs
-
-The current script generates results in the following fixed order:
-
-1. *Castor canadensis*
-2. *Ovis dalli*
-3. *Rupicapra rupicapra*
-
-This order is used consistently in:
-
-- the output workbook,
-- the three-panel figure,
-- and the panel labels A, B, and C.
 
 ## Requirements
 
@@ -121,14 +85,7 @@ Running the script should generate:
 - `Figure1_WeibullExamples_300dpi.png`
 - `Figure1_WeibullExamples_300dpi.jpg`
 - `Figure1_WeibullExamples_300dpi.tiff`
-- optionally `Figure1_WeibullExamples.eps`
 
-The output workbook includes:
-
-- one beta sweep sheet per species,
-- one best-fit sheet per species,
-- an optional metadata sheet,
-- and, if enabled in the script, an optional summary sheet.
 
 ## Relation to the StablePopulation package
 
