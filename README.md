@@ -60,16 +60,16 @@ This repository provides the materials needed to reproduce that external analysi
 The current script differs from earlier versions of the workflow in one important respect:
 
 - it uses the **original** fertility schedules (`mx`) for each species,
-- it does **not** rescale fertility by observed \(R_0\),
-- and for each beta it computes the alpha that forces:
+it does not rescale fertility by observed $R_0$,  
+and for each beta it computes the alpha that forces
 
-\[
-\sum l_x^{pred} m_x = 1
-\]
+$$
+\sum l_x^{\mathrm{pred}} m_x = 1
+$$
 
-In other words, the present script works under an **artificial constraint of \(R_0 = 1\)** using the original `mx` values, rather than reconstructing a profile consistent with each species’ observed \(R_0\).
+In other words, the present script works under an artificial constraint of $R_0 = 1$ using the original $m_x$ values, rather than reconstructing a profile consistent with each species’ observed $R_0$.
 
-This means that the current workflow should be interpreted as a controlled comparative experiment under a fixed demographic constraint, not as a direct reconstruction of the empirical \(R_0\) values reported in the source papers.
+This means that the current workflow should be interpreted as a controlled comparative experiment under a fixed demographic constraint, not as a direct reconstruction of the empirical $R_0$ values reported in the source papers.
 
 ## Species order used in outputs
 
