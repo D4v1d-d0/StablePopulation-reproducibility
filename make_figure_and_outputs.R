@@ -35,8 +35,8 @@
 # HOJAS ESPERADAS
 # ---------------
 #   - Castor_Cannadensis_input
-#   - Rupicapra_Rupicapra_input
 #   - Ovis_dalli_input
+#   - Rupicapra_Rupicapra_input
 #
 # COLUMNAS ESPERADAS EN CADA HOJA
 # -------------------------------
@@ -96,25 +96,26 @@ include_metadata_sheet <- TRUE
 extra_journal_format <- "none"
 
 # Especies y nombres de sus hojas de entrada
+# ORDEN FIJADO: Castor -> Ovis -> Rupicapra
 species_sheets <- c(
   "Castor canadensis" = "Castor_Cannadensis_input",
-  "Rupicapra rupicapra" = "Rupicapra_Rupicapra_input",
-  "Ovis dalli" = "Ovis_dalli_input"
+  "Ovis dalli" = "Ovis_dalli_input",
+  "Rupicapra rupicapra" = "Rupicapra_Rupicapra_input"
 )
 
 # Nombres cortos para hojas Excel de salida
 species_short <- c(
   "Castor canadensis" = "Castor",
-  "Rupicapra rupicapra" = "Rupicapra",
-  "Ovis dalli" = "Ovis"
+  "Ovis dalli" = "Ovis",
+  "Rupicapra rupicapra" = "Rupicapra"
 )
 
 # Títulos de los paneles de la figura
 # Nombres científicos en cursiva, sin etiquetas valorativas.
 panel_titles <- list(
   "Castor canadensis" = expression("A) " * italic(Castor) ~ italic(canadensis)),
-  "Rupicapra rupicapra" = expression("B) " * italic(Rupicapra) ~ italic(rupicapra)),
-  "Ovis dalli" = expression("C) " * italic(Ovis) ~ italic(dalli))
+  "Ovis dalli" = expression("B) " * italic(Ovis) ~ italic(dalli)),
+  "Rupicapra rupicapra" = expression("C) " * italic(Rupicapra) ~ italic(rupicapra))
 )
 
 
