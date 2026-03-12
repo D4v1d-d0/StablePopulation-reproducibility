@@ -60,8 +60,8 @@ This repository provides the materials needed to reproduce that external analysi
 The current script differs from earlier versions of the workflow in one important respect:
 
 - it uses the **original** fertility schedules (`mx`) for each species,
-it does not rescale fertility by observed $R_0$,  
-and for each beta it computes the alpha that forces
+- it does not rescale fertility by observed $R_0$,  
+- and for each beta it computes the alpha that forces.
 
 $$
 \sum l_x^{\mathrm{pred}} m_x = 1
