@@ -1,5 +1,5 @@
 # ============================================================
-# make_figure_and_outputs_from_inputs_only.R
+# make_figure_and_outputs_R0eq1_no_rescaling.R
 # ============================================================
 #
 # OBJETIVO
@@ -8,19 +8,25 @@
 # este script:
 #
 #   1) Lee las tablas de entrada.
-#   2) Calcula R0 observado para cada especie:
-#          R0_obs = sum(lx_obs * mx)
-#   3) Reescala las fertilidades como mx / R0_obs para reutilizar
-#      las funciones del paquete StablePopulation, que internamente
-#      asumen R0 = 1.
-#   4) Hace un barrido de beta.
-#   5) Para cada beta:
-#         - calcula alpha
+#   2) Usa directamente los mx ORIGINALES de cada especie.
+#   3) Para cada beta del barrido:
+#         - calcula el alpha que hace R0 = 1
+#           usando esos mx originales
 #         - genera el perfil predicho
 #         - calcula ECM y RMSE frente a lx observado
-#   6) Elige el mejor ajuste (mínimo ECM).
-#   7) Exporta un Excel con resultados.
-#   8) Genera una figura con tres paneles.
+#   4) Elige el mejor ajuste (mínimo ECM).
+#   5) Exporta un Excel con resultados.
+#   6) Genera una figura con tres paneles.
+#
+# IMPORTANTE
+# ----------
+# Este script NO calcula R0 observado y NO reescala mx.
+#
+# Es decir, aquí se fuerza artificialmente:
+#
+#       sum(lx_pred * mx) = 1
+#
+# usando los mx originales de cada especie.
 #
 # ENTRADA
 # -------
@@ -28,9 +34,9 @@
 #
 # HOJAS ESPERADAS
 # ---------------
-#   - Castor_canadensis_input
+#   - Castor_Cannadensis_input
+#   - Rupicapra_Rupicapra_input
 #   - Ovis_dalli_input
-#   - Rangifer_tarandus_input
 #
 # COLUMNAS ESPERADAS EN CADA HOJA
 # -------------------------------
@@ -91,24 +97,24 @@ extra_journal_format <- "none"
 
 # Especies y nombres de sus hojas de entrada
 species_sheets <- c(
-  "Castor canadensis" = "Castor_canadensis_input",
-  "Ovis dalli" = "Ovis_dalli_input",
-  "Rangifer tarandus" = "Rangifer_tarandus_input"
+  "Castor canadensis" = "Castor_Cannadensis_input",
+  "Rupicapra rupicapra" = "Rupicapra_Rupicapra_input",
+  "Ovis dalli" = "Ovis_dalli_input"
 )
 
 # Nombres cortos para hojas Excel de salida
 species_short <- c(
   "Castor canadensis" = "Castor",
-  "Ovis dalli" = "Ovis",
-  "Rangifer tarandus" = "Rangifer"
+  "Rupicapra rupicapra" = "Rupicapra",
+  "Ovis dalli" = "Ovis"
 )
 
 # Títulos de los paneles de la figura
 # Nombres científicos en cursiva, sin etiquetas valorativas.
 panel_titles <- list(
   "Castor canadensis" = expression("A) " * italic(Castor) ~ italic(canadensis)),
-  "Ovis dalli" = expression("B) " * italic(Ovis) ~ italic(dalli)),
-  "Rangifer tarandus" = expression("C) " * italic(Rangifer) ~ italic(tarandus))
+  "Rupicapra rupicapra" = expression("B) " * italic(Rupicapra) ~ italic(rupicapra)),
+  "Ovis dalli" = expression("C) " * italic(Ovis) ~ italic(dalli))
 )
 
 
@@ -198,11 +204,23 @@ read_input_sheet <- function(path, sheet_name) {
 
 
 # ============================================================
-# 4) AJUSTE POR BARRIDO DE BETA
+# 4) AJUSTE POR BARRIDO DE BETA FORZANDO R0 = 1 SIN REESCALAR
 # ============================================================
 #
-# MEJORA INTRODUCIDA
-# ------------------
+# IDEA DEL CÁLCULO
+# ----------------
+# A diferencia del script anterior:
+#
+#   - aquí NO se calcula R0 observado
+#   - aquí NO se reescala mx como mx / R0_obs
+#
+# Lo que se hace es usar directamente los mx originales y pedir
+# a find_alphas() que halle el alpha que hace:
+#
+#       sum(lx_pred * mx) = 1
+#
+# para cada beta del barrido.
+#
 # En lugar de recalcular el mejor perfil al final, aquí se guarda
 # el perfil lx_pred de cada beta durante el propio barrido.
 # Después, cuando se identifica el beta óptimo, simplemente se
@@ -212,25 +230,19 @@ read_input_sheet <- function(path, sheet_name) {
 fit_by_beta_sweep <- function(dat, beta_grid) {
   
   # ----------------------------------------------------------
-  # 4.1) CALCULAR R0 OBSERVADO
+  # 4.1) FERTILIDADES USADAS EN EL AJUSTE
   # ----------------------------------------------------------
-  R0_obs <- sum(dat$lx_obs * dat$mx, na.rm = TRUE)
+  #
+  # Aquí usamos directamente los mx originales, SIN reescalado.
+  # ----------------------------------------------------------
+  mx_used <- dat$mx
   
-  if (!is.finite(R0_obs) || R0_obs <= 0) {
-    stop("R0_obs no es positivo y finito.")
+  if (sum(mx_used, na.rm = TRUE) < 1) {
+    stop("No existe raíz porque sum(mx) < 1. Revisa mx.")
   }
   
   # ----------------------------------------------------------
-  # 4.2) REESCALAR mx PARA TRABAJAR INTERNAMENTE CON R0 = 1
-  # ----------------------------------------------------------
-  mx_scaled <- dat$mx / R0_obs
-  
-  if (sum(mx_scaled, na.rm = TRUE) < 1) {
-    stop("No existe raíz porque sum(mx/R0) < 1. Revisa mx y/o R0.")
-  }
-  
-  # ----------------------------------------------------------
-  # 4.3) BARRIDO DE BETA
+  # 4.2) BARRIDO DE BETA
   # ----------------------------------------------------------
   #
   # Para cada beta guardamos:
@@ -244,17 +256,17 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
   results <- lapply(beta_grid, function(b) {
     
     tryCatch({
-      # Hallar alpha para este beta
+      # Hallar alpha para este beta imponiendo R0 = 1
       a <- StablePopulation::find_alphas(
         beta = b,
-        fertility_rates = mx_scaled
+        fertility_rates = mx_used
       )
       
       # Generar perfil poblacional / perfil predicho
       pop <- StablePopulation::calculate_population(
         alpha = a,
         beta = b,
-        fertility_rates = mx_scaled
+        fertility_rates = mx_used
       )$population
       
       # Comprobación de longitud
@@ -268,7 +280,7 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
       ecm  <- mean((lx_pred - dat$lx_obs)^2, na.rm = TRUE)
       rmse <- sqrt(ecm)
       
-      # Comprobación de consistencia con el mx original
+      # Comprobación de consistencia con la restricción forzada
       R0_check <- sum(lx_pred * dat$mx, na.rm = TRUE)
       
       list(
@@ -277,7 +289,6 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
           alpha = a,
           ECM = ecm,
           RMSE = rmse,
-          R0_obs = R0_obs,
           R0_check = R0_check,
           status = "ok"
         ),
@@ -296,7 +307,6 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
           alpha = NA_real_,
           ECM = NA_real_,
           RMSE = NA_real_,
-          R0_obs = R0_obs,
           R0_check = NA_real_,
           status = paste("error:", conditionMessage(e))
         ),
@@ -312,7 +322,7 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
   profiles_list <- lapply(results, `[[`, "profile")
   
   # ----------------------------------------------------------
-  # 4.4) ELEGIR EL MEJOR AJUSTE ENTRE LOS BETA VÁLIDOS
+  # 4.3) ELEGIR EL MEJOR AJUSTE ENTRE LOS BETA VÁLIDOS
   # ----------------------------------------------------------
   valid <- which(is.finite(res$ECM))
   
@@ -324,11 +334,7 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
   best <- res[best_i, ]
   
   # ----------------------------------------------------------
-  # 4.5) RECUPERAR DIRECTAMENTE EL MEJOR PERFIL
-  # ----------------------------------------------------------
-  #
-  # Aquí NO se recalcula. Se toma el perfil ya generado durante
-  # el barrido para el beta óptimo.
+  # 4.4) RECUPERAR DIRECTAMENTE EL MEJOR PERFIL
   # ----------------------------------------------------------
   profile_best <- profiles_list[[best_i]]
   
@@ -389,6 +395,7 @@ if (include_metadata_sheet) {
       "beta_min",
       "beta_max",
       "beta_step",
+      "constraint",
       "date"
     ),
     value = c(
@@ -398,6 +405,7 @@ if (include_metadata_sheet) {
       min(beta_grid),
       max(beta_grid),
       beta_grid[2] - beta_grid[1],
+      "Forced R0 = 1 using original mx (no rescaling)",
       as.character(Sys.time())
     )
   )
