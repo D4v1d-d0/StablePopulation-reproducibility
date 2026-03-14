@@ -8,10 +8,10 @@
 # este script:
 #
 #   1) Lee las tablas de entrada.
-#   2) Usa directamente los mx ORIGINALES de cada especie.
+#   2) Usa los mx de cada especie.
 #   3) Para cada beta del barrido:
 #         - calcula el alpha que hace R0 = 1
-#           usando esos mx originales
+#           usando esos mx  
 #         - genera el perfil predicho
 #         - calcula ECM y RMSE frente a lx observado
 #   4) Elige el mejor ajuste (mínimo ECM).
@@ -20,9 +20,7 @@
 #
 # IMPORTANTE
 # ----------
-# Este script NO calcula R0 observado y NO reescala mx.
-#
-# Es decir, aquí se fuerza artificialmente:
+# Este script asume:
 #
 #       sum(lx_pred * mx) = 1
 #
@@ -204,26 +202,21 @@ read_input_sheet <- function(path, sheet_name) {
 }
 
 
-# ============================================================
-# 4) AJUSTE POR BARRIDO DE BETA FORZANDO R0 = 1 SIN REESCALAR
-# ============================================================
+# =============================================== 
+# 4) AJUSTE POR BARRIDO DE BETA FORZANDO R0 = 1 
+# ===============================================
 #
 # IDEA DEL CÁLCULO
 # ----------------
-# A diferencia del script anterior:
 #
-#   - aquí NO se calcula R0 observado
-#   - aquí NO se reescala mx como mx / R0_obs
-#
-# Lo que se hace es usar directamente los mx originales y pedir
+# Se usan los mx leídos y se pide
 # a find_alphas() que halle el alpha que hace:
 #
 #       sum(lx_pred * mx) = 1
 #
 # para cada beta del barrido.
 #
-# En lugar de recalcular el mejor perfil al final, aquí se guarda
-# el perfil lx_pred de cada beta durante el propio barrido.
+# Se guarda el perfil lx_pred de cada beta durante el propio barrido.
 # Después, cuando se identifica el beta óptimo, simplemente se
 # recupera el perfil ya calculado.
 # ============================================================
@@ -234,7 +227,7 @@ fit_by_beta_sweep <- function(dat, beta_grid) {
   # 4.1) FERTILIDADES USADAS EN EL AJUSTE
   # ----------------------------------------------------------
   #
-  # Aquí usamos directamente los mx originales, SIN reescalado.
+  # Aquí usamos los mx originales.
   # ----------------------------------------------------------
   mx_used <- dat$mx
   
