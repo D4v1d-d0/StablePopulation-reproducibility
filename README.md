@@ -13,7 +13,7 @@ The current version of the reproducibility workflow reproduces three example cas
 - `Inputs_3_examples.xlsx`  
   Input workbook used by the external reproducibility script.
   
-- `make_figure_and_outputs_R0eq1_no_rescaling_reordered.R`  
+- `make_figure_and_outputs.R`  
   External R script used to generate the output workbook and Figure 1.
 
 - `Outputs_3_examples.xlsx`  
@@ -69,11 +69,11 @@ install.packages(c("readxl", "openxlsx", "StablePopulation"))
 
 1. Download or clone this repository.
 2. Open R in the repository folder.
-3. Ensure that `Inputs_3_examples.xlsx` and `make_figure_and_outputs_R0eq1_no_rescaling_reordered.R` are in the working directory.
+3. Ensure that `Inputs_3_examples.xlsx` and `make_figure_and_outputs.R` are in the working directory.
 4. Run:
 
 ```r
-source("make_figure_and_outputs_R0eq1_no_rescaling_reordered.R")
+source("make_figure_and_outputs.R")
 ```
 
 ## Expected outputs
@@ -104,7 +104,7 @@ If you use this repository, please cite both:
 
 Suggested citation for this repository:
 
-Palacios-Morales, D., Rodríguez-Gómez, G., & Martín-González, J. A. (2026). *StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note* (Version 1.0.0) [Code and data repository]. Zenodo. https://doi.org/10.5281/zenodo.18913362
+Palacios-Morales, D., Rodríguez-Gómez, G., & Martín-González, J. A. (2026). *StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note* (Version 1.0.1) [Code and data repository]. Zenodo. https://doi.org/10.5281/zenodo.19020637
 
 ## License
 
