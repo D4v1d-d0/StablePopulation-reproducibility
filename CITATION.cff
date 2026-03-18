@@ -2,9 +2,9 @@ cff-version: 1.2.0
 message: "If you use this repository, please cite the archived Zenodo version below."
 type: software
 title: "StablePopulation reproducibility files for the ECOSISTEMAS ecoinformatics note"
-version: "1.0.0"
-doi: 10.5281/zenodo.18913362
-date-released: "2026-03-08"
+version: "1.0.2"
+doi: 10.5281/zenodo.18913361
+date-released: "2026-03-18"
 authors:
   - family-names: "Palacios-Morales"
     given-names: "David"
@@ -22,10 +22,10 @@ repository-code: "https://github.com/D4v1d-d0/StablePopulation-reproducibility"
 url: "https://github.com/D4v1d-d0/StablePopulation-reproducibility"
 abstract: "Input data, external R script, output files, and final figure formats required to reproduce the three Weibull fits presented in the ECOSISTEMAS ecoinformatics note on StablePopulation."
 keywords:
-  - "R"
-  - "demography"
+  - "R" 
+  - "paleoecology"
   - "ecoinformatics"
   - "reproducibility"
   - "stable population"
-  - "Weibull model"
+  - "survival model"
 license: "GPL-3.0-only"
