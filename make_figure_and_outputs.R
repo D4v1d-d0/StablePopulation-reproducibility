@@ -88,7 +88,7 @@ beta_grid <- seq(0.05, 3.00, by = 0.05)
 include_summary_sheet <- FALSE
 
 # Añadir o no una hoja de metadatos
-include_metadata_sheet <- TRUE
+include_metadata_sheet <- FALSE
 
 # Formato gráfico adicional opcional: "none", "jpeg", "eps"
 extra_journal_format <- "none"
@@ -399,7 +399,7 @@ if (include_metadata_sheet) {
       min(beta_grid),
       max(beta_grid),
       beta_grid[2] - beta_grid[1],
-      "Forced R0 = 1 using original mx (no rescaling)",
+      "Forced R0 = 1 using observed mx",
       as.character(Sys.time())
     )
   )
