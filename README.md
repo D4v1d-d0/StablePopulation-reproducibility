@@ -34,6 +34,12 @@ The current version of the reproducibility workflow reproduces three example cas
 - `Figure1_WeibullExamples.eps`  
   Optional EPS version of Figure 1, generated only if requested in the script.
 
+- `examples/run_analysis/`  
+  Example material documenting the Excel-based `run_analysis()` interface:
+  - `Input_Data.xlsx` illustrates the input workbook layout expected by the function.
+  - `outputs/` contains the corresponding output workbooks generated from the example worksheets.
+  - `README.md` explains the scope and structure of this example.
+
 ## Purpose of this repository
 
 The `StablePopulation` R package performs the core demographic calculations. However, the manuscript-specific comparison and figure generation are carried out **outside the package** using an external R script.
