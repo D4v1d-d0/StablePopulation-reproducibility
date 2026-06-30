@@ -39,6 +39,10 @@ The current version of the reproducibility workflow reproduces three example cas
   - `Input_Data.xlsx` illustrates the input workbook layout expected by the function.
   - `outputs/` contains the corresponding output workbooks generated from the example worksheets.
   - `README.md` explains the scope and structure of this example.
+     
+- `docs/practical_case_workflow.md`
+  Step-by-step guide to the manuscript-specific practical case. It explains the input data, beta scan, alpha estimation, profile reconstruction, ECM/RMSE calculation, model selection, and Figure 1 generation.
+
 
 ## Purpose of this repository
 
@@ -53,6 +57,7 @@ This repository provides the materials needed to reproduce that external analysi
 5. exporting the output workbook,
 6. generating Figure 1 in multiple formats.
 
+A step-by-step description of the practical case is available in [`docs/practical_case_workflow.md`](docs/practical_case_workflow.md). This guide explains the analysis from the input data to the final outputs, including the observed survivorship profiles, age-specific fertility vectors, beta scan, alpha estimation, ECM/RMSE calculation, selection of the best-fitting beta value, and Figure 1 generation.
 
 
 ## Requirements
