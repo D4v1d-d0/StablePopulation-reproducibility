@@ -1,8 +1,8 @@
-# Step-by-step practical workflow
+# Step-by-step reproducibility workflow for the practical case
 
-This guide documents the manuscript-specific workflow used to compare observed survivorship profiles with profiles reconstructed by the **StablePopulation** R package. It complements the manuscript and the external script `make_figure_and_outputs.R`.
+This guide documents the manuscript-specific workflow used to compare observed survivorship profiles with profiles reconstructed by the **StablePopulation** R package. It complements the ECOSISTEMAS note and the external script `make_figure_and_outputs.R`.
 
-The workflow is designed as a transparent example of how the core package functions can be used when a researcher has both an observed survivorship profile and age-specific fertility data. It is separate from the fixed-`beta` Excel interface illustrated in [`examples/run_analysis/`](../examples/run_analysis/README.md).
+The original analysis described in the note was carried out with **StablePopulation 1.0.3**. This workflow uses only the core functions `find_alphas()` and `calculate_population()`, already available in that release, and is intended to remain compatible with later package versions that preserve those functions. It is separate from the fixed-`beta` Excel interface illustrated in [`examples/run_analysis/`](../examples/run_analysis/README.md).
 
 ## Aim of the practical case
 
@@ -66,6 +66,18 @@ The life-table framework models female demographic parameters. Therefore, when s
 
 The package also includes `weibull_survival()` for evaluating survivorship at a given age and `run_analysis()` for processing Excel-defined cases with a fixed value of `beta`. The latter interface is documented separately in [`examples/run_analysis/`](../examples/run_analysis/README.md).
 
+## Results of the practical case
+
+The selected values below are the rows with the minimum `ECM` in the beta sweep for each species. The full candidate sweeps and the corresponding reconstructed survivorship profiles are available in `Outputs_3_examples.xlsx`.
+
+| Species | Selected beta | Estimated alpha | ECM | RMSE |
+|---|---:|---:|---:|---:|
+| *Castor canadensis* | 0.80 | 2.049302 | 0.000807 | 0.028409 |
+| *Ovis dalli* | 0.55 | 3.371558 | 0.002671 | 0.051685 |
+| *Rupicapra rupicapra* | 2.05 | 4.867964 | 0.004167 | 0.064549 |
+
+Figure 1 displays the observed survivorship profile and the selected Weibull reconstruction for each species. Together, the input workbook, output workbook, external script, and figure provide a complete, reproducible path from the original demographic data to the graphical comparison presented in the note.
+
 ## Applying the workflow to another species
 
 To adapt this example to another species:
@@ -83,4 +95,3 @@ The script will create a new output workbook and regenerate Figure 1 according t
 - `make_figure_and_outputs.R`: external reproducibility script.
 - `Outputs_3_examples.xlsx`: complete `beta` sweeps and selected profiles.
 - `Figure1_WeibullExamples.*`: final figure formats.
-
