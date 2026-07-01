@@ -55,7 +55,7 @@ The life-table framework models female demographic parameters. Therefore, when s
    The value of `beta` with the smallest `ECM` is selected. Its associated `alpha`, `RMSE`, and reconstructed profile are retained.
 
 7. **Write outputs and generate Figure 1.**  
-   `Outputs_3_examples.xlsx` contains a complete `beta` sweep and the selected profile for each species. The script also generates Figure 1 in several formats.
+   `Outputs_3_examples.xlsx` contains a complete `beta` sweep and the selected profile for each species. The script also generates equivalent English and Spanish versions of Figure 1 in several formats.
 
 ## Core functions used
 
@@ -94,4 +94,5 @@ The script will create a new output workbook and regenerate Figure 1 according t
 - `Inputs_3_examples.xlsx`: observed survivorship and fertility data.
 - `make_figure_and_outputs.R`: external reproducibility script.
 - `Outputs_3_examples.xlsx`: complete `beta` sweeps and selected profiles.
-- `Figure1_WeibullExamples.*`: final figure formats.
+- `figures/en/Figure1_WeibullExamples.*`: final English figure formats.
+- `figures/es/Figure1_WeibullExamples_ES.*`: equivalent final Spanish figure formats.

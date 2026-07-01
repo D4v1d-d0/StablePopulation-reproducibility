@@ -4,8 +4,8 @@
 #
 # This script reads the three example sheets in Inputs_3_examples.xlsx,
 # performs the beta sweep used in the reproducibility repository,
-# writes Outputs_3_examples.xlsx, and generates the figure files in
-# both English and Spanish.
+# writes Outputs_3_examples.xlsx, and generates Figure 1 in
+# English and Spanish under figures/en/ and figures/es/.
 # ============================================================
 
 pkgs <- c("readxl", "openxlsx", "StablePopulation")
@@ -26,6 +26,13 @@ include_summary_sheet <- FALSE
 include_metadata_sheet <- FALSE
 extra_journal_format <- "none"
 figure_languages <- c("en", "es")
+
+# Output folders for the two language variants of Figure 1.
+# They are created automatically when the script is run.
+figure_directories <- c(
+  en = file.path("figures", "en"),
+  es = file.path("figures", "es")
+)
 
 species_sheets <- c(
   "Castor canadensis" = "Castor_Cannadensis_input",
@@ -148,26 +155,34 @@ get_plot_labels <- function(language = c("en", "es")) {
   }
 }
 
-get_figure_filename <- function(device = c("pdf", "png", "tiff", "jpeg", "jpg", "eps"), language = c("en", "es")) {
+get_figure_filename <- function(device = c("pdf", "png", "tiff", "jpeg", "jpg", "eps"),
+                                language = c("en", "es")) {
   device <- match.arg(device)
   language <- match.arg(language)
-  if (language == "en") {
-    switch(device,
+
+  base_filename <- if (language == "en") {
+    switch(
+      device,
       pdf  = "Figure1_WeibullExamples.pdf",
       png  = "Figure1_WeibullExamples_300dpi.png",
       tiff = "Figure1_WeibullExamples_300dpi.tiff",
       jpeg = "Figure1_WeibullExamples_300dpi.jpeg",
       jpg  = "Figure1_WeibullExamples_300dpi.jpg",
-      eps  = "Figure1_WeibullExamples.eps")
+      eps  = "Figure1_WeibullExamples.eps"
+    )
   } else {
-    switch(device,
+    switch(
+      device,
       pdf  = "Figure1_WeibullExamples_ES.pdf",
       png  = "Figure1_WeibullExamples_ES_300dpi.png",
       tiff = "Figure1_WeibullExamples_ES_300dpi.tiff",
       jpeg = "Figure1_WeibullExamples_ES_300dpi.jpeg",
       jpg  = "Figure1_WeibullExamples_ES_300dpi.jpg",
-      eps  = "Figure1_WeibullExamples_ES.eps")
+      eps  = "Figure1_WeibullExamples_ES.eps"
+    )
   }
+
+  file.path(figure_directories[[language]], base_filename)
 }
 
 plot_profile <- function(fit_obj, title_text, language = c("en", "es")) {
@@ -205,6 +220,7 @@ make_three_panel_figure <- function(device = c("pdf", "png", "tiff", "jpeg", "jp
   device <- match.arg(device)
   language <- match.arg(language)
   filename <- get_figure_filename(device, language)
+  dir.create(dirname(filename), recursive = TRUE, showWarnings = FALSE)
   if (device == "pdf") {
     pdf(filename, width = 14, height = 4.8)
   } else if (device == "png") {
